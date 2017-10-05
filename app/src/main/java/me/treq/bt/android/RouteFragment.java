@@ -12,11 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import me.treq.bt.android.biz.routes.RoutesViewModel;
-import me.treq.bt.android.dao.DummyRoutesDao;
+import java.util.Collections;
+import java.util.List;
+
 import me.treq.bt.android.biz.routes.Route;
-import me.treq.bt.android.biz.routes.RoutesDao;
-import me.treq.bt.android.util.InstanceFactory;
+import me.treq.bt.android.biz.routes.RoutesViewModel;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * A fragment representing a list of Items.
@@ -31,8 +33,8 @@ public class RouteFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
-
     private RoutesViewModel routesViewModel;
+    private MyItemRecyclerViewAdapter adapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -58,13 +60,6 @@ public class RouteFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
-
-        this.routesViewModel = ViewModelProviders.of(this).get(RoutesViewModel.class);
-        this.routesViewModel.init();
-        this.routesViewModel.getRouteByIdMap().observe(this, routeById -> {
-            Log.i(TAG, "onCreate: got routeById: " + routeById);
-            // TODO pass the routeById to RouteFragment
-        });
     }
 
     @Override
@@ -81,8 +76,17 @@ public class RouteFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(this.routesDao.getAllRoutes(), mListener));
+            adapter = new MyItemRecyclerViewAdapter(Collections.emptyList(), mListener);
+            recyclerView.setAdapter(adapter);
+
+            this.routesViewModel = ViewModelProviders.of(this).get(RoutesViewModel.class);
+            this.routesViewModel.init();
+            this.routesViewModel.getRoutes().observe(this, routes -> {
+                adapter.setRoute(routes);
+                adapter.notifyDataSetChanged();
+            });
         }
+
         return view;
     }
 

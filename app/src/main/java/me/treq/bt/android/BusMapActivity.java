@@ -49,8 +49,7 @@ public class BusMapActivity extends FragmentActivity implements OnMapReadyCallba
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_map);
 
-        // TODO read from intent.
-        mRouteId = "1";
+        mRouteId = getIntent().getStringExtra("routeId");
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()

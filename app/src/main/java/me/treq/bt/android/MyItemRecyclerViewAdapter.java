@@ -18,7 +18,7 @@ import me.treq.bt.android.biz.routes.Route;
  */
 public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Route> mValues;
+    private List<Route> mValues;
     private final OnListFragmentInteractionListener mListener;
 
     public MyItemRecyclerViewAdapter(List<Route> items, OnListFragmentInteractionListener listener) {
@@ -70,5 +70,9 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         public String toString() {
             return super.toString() + " '" + mIdView.getText() + "'";
         }
+    }
+
+    public void setRoute(List<Route> routes) {
+        this.mValues = routes;
     }
 }

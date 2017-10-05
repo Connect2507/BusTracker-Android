@@ -1,7 +1,9 @@
 package me.treq.bt.android;
 
-import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -19,11 +21,20 @@ public class MainActivity extends AppCompatActivity implements RouteFragment.OnL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
+        RouteFragment fragment = RouteFragment.newInstance(1);
+        fragmentTransaction.replace(R.id.fragment_container, fragment);
+        fragmentTransaction.commit();
     }
 
     @Override
     public void onListFragmentInteraction(Route item) {
         Log.d(TAG, "onListFragmentInteraction: " + item);
+        Intent intent = new Intent(this, BusMapActivity.class);
+        intent.putExtra("routeId", item.getId());
+        startActivity(intent);
     }
+
 }
