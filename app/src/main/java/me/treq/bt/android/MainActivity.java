@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import me.treq.bt.android.biz.routes.Route;
 import me.treq.bt.android.biz.routes.RoutesViewModel;
 
 public class MainActivity extends AppCompatActivity implements RouteFragment.OnListFragmentInteractionListener {

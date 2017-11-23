@@ -9,7 +9,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import me.treq.bt.android.RouteFragment.OnListFragmentInteractionListener;
-import me.treq.bt.android.biz.routes.Route;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Route} and makes a call to the

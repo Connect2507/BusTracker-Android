@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import me.treq.bt.android.util.InstanceFactory;
+import me.treq.bustracker_api.data.entity.Bus;
 
 public class BusesViewModel extends ViewModel {
 
@@ -30,7 +31,7 @@ public class BusesViewModel extends ViewModel {
 
     public void refresh(String routeId) {
         Log.d("BusesViewModel", "refresh: buses for route " + routeId + " at " + new Date());
-        this.busRepo.getBuses(this.buses, routeId);
+        this.busRepo.getBuses(this.buses, "nyWaterway", routeId);
     }
 
     public LiveData<List<Bus>> getBuses() {

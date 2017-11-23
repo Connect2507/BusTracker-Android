@@ -22,9 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import me.treq.bt.android.biz.Location;
-import me.treq.bt.android.biz.buses.Bus;
 import me.treq.bt.android.biz.buses.BusesViewModel;
-import me.treq.bt.android.biz.routes.Route;
 import me.treq.bt.android.biz.routes.RoutesViewModel;
 
 public class BusMapActivity extends FragmentActivity implements OnMapReadyCallback {

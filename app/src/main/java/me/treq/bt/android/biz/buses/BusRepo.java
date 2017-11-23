@@ -7,24 +7,24 @@ import org.apache.commons.lang3.Validate;
 
 import java.util.List;
 
-import me.treq.bt.android.service.BusWebService;
+import me.treq.bustracker_api.data.api.BusesApi;
+import me.treq.bustracker_api.data.entity.Bus;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BusRepo {
 
-    private final BusWebService busWebService;
+    private final BusesApi busesApi;
 
-    public BusRepo(BusWebService busWebService) {
-        Validate.notNull(busWebService);
+    public BusRepo(BusesApi busesApi) {
+        Validate.notNull(busesApi);
 
-        this.busWebService = busWebService;
+        this.busesApi = busesApi;
     }
 
-
-    public void getBuses(MutableLiveData<List<Bus>> buses, String routeId) {
-        this.busWebService.getBuses(routeId).enqueue(new Callback<List<Bus>>() {
+    public void getBuses(MutableLiveData<List<Bus>> buses, String system, String routeId) {
+        this.busesApi.getBus("nyw", routeId).enqueue(new Callback<List<Bus>>() {
             @Override
             public void onResponse(Call<List<Bus>> call, Response<List<Bus>> response) {
                 Log.i("BusRepo", "onResponse: got buses from bus service");

@@ -7,7 +7,8 @@ import org.apache.commons.lang3.Validate;
 
 import java.util.List;
 
-import me.treq.bt.android.service.BusWebService;
+import me.treq.bustracker_api.data.api.RoutesApi;
+import me.treq.bustracker_api.data.entity.BusRoute;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -16,40 +17,54 @@ public class RoutesRepo {
 
     private final static String TAG = "RoutesRepo";
 
-    private final BusWebService busWebService;
+    private final RoutesApi routesApi;
 
-    public RoutesRepo(BusWebService busWebService) {
-        this.busWebService = busWebService;
+    public RoutesRepo(RoutesApi routesApi) {
+        this.routesApi = routesApi;
     }
 
-    public void getRoute(MutableLiveData<Route> route, final String routeId) {
+    public void getRoute(MutableLiveData<BusRoute> route, final String routeId) {
         Validate.notEmpty(routeId, "A valid routeId is required.");
         Validate.notNull(route, "A valid route is required.");
 
-        this.busWebService.getRoute(routeId).enqueue(new Callback<Route>() {
+        /*
+        this.routesApi.getRouteById("nyw", routeId).enqueue(new Callback<BusRoute>() {
             @Override
-            public void onResponse(Call<Route> call, Response<Route> response) {
+            public void onResponse(Call<BusRoute> call, Response<BusRoute> response) {
                 route.setValue(response.body());
             }
 
             @Override
-            public void onFailure(Call<Route> call, Throwable t) {
+            public void onFailure(Call<BusRoute> call, Throwable t) {
                 Log.e(TAG, "onFailure: failed to get route for " + routeId, t);
+            }
+        });
+        */
+
+        this.routesApi.getRouteById("nyw", routeId).enqueue(new Callback<List<BusRoute>>() {
+            @Override
+            public void onResponse(Call<List<BusRoute>> call, Response<List<BusRoute>> response) {
+                route.setValue(response.);
+            }
+
+            @Override
+            public void onFailure(Call<List<BusRoute>> call, Throwable t) {
+
             }
         });
     }
 
-    public void getActiveRoutes(MutableLiveData<List<Route>> routes) {
+    public void getActiveRoutes(MutableLiveData<List<BusRoute>> routes) {
         Validate.notNull(routes);
 
-        this.busWebService.getActiveRoutes().enqueue(new Callback<List<Route>>() {
+        this.busWebService.getActiveRoutes().enqueue(new Callback<List<BusRoute>>() {
             @Override
-            public void onResponse(Call<List<Route>> call, Response<List<Route>> response) {
+            public void onResponse(Call<List<BusRoute>> call, Response<List<BusRoute>> response) {
                 routes.setValue(response.body());
             }
 
             @Override
-            public void onFailure(Call<List<Route>> call, Throwable t) {
+            public void onFailure(Call<List<BusRoute>> call, Throwable t) {
                 Log.e(TAG, "onFailure: failed to get active routes", t);
             }
         });

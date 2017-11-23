@@ -7,18 +7,13 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.Collections;
-import java.util.List;
 
-import me.treq.bt.android.biz.routes.Route;
 import me.treq.bt.android.biz.routes.RoutesViewModel;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * A fragment representing a list of Items.

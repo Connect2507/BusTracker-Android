@@ -49,6 +49,7 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
     compile 'com.google.dagger:dagger-android:2.11'
     compile 'com.google.dagger:dagger-android-support:2.11' // if you use the support libraries
+    compile files('libs/swagger-bustracker-retrofit2-1.0.0.jar')
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.11'
     testCompile 'junit:junit:4.12'
     testCompile 'android.arch.core:core-testing:1.0.0-alpha9-1'
