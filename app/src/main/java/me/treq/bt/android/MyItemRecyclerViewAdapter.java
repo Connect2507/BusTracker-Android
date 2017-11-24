@@ -9,18 +9,19 @@ import android.widget.TextView;
 import java.util.List;
 
 import me.treq.bt.android.RouteFragment.OnListFragmentInteractionListener;
+import me.treq.bustracker_api.data.entity.BusRoute;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link Route} and makes a call to the
+ * {@link RecyclerView.Adapter} that can display a {@link BusRoute} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder> {
 
-    private List<Route> mValues;
+    private List<BusRoute> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyItemRecyclerViewAdapter(List<Route> items, OnListFragmentInteractionListener listener) {
+    public MyItemRecyclerViewAdapter(List<BusRoute> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -35,7 +36,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).getDescription());
+        holder.mIdView.setText(mValues.get(position).getRouteDescription());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +58,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;
-        public Route mItem;
+        public BusRoute mItem;
 
         public ViewHolder(View view) {
             super(view);
@@ -71,7 +72,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         }
     }
 
-    public void setRoute(List<Route> routes) {
+    public void setRoute(List<BusRoute> routes) {
         this.mValues = routes;
     }
 }

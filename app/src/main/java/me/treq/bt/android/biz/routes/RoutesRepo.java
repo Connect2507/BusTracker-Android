@@ -27,7 +27,6 @@ public class RoutesRepo {
         Validate.notEmpty(routeId, "A valid routeId is required.");
         Validate.notNull(route, "A valid route is required.");
 
-        /*
         this.routesApi.getRouteById("nyw", routeId).enqueue(new Callback<BusRoute>() {
             @Override
             public void onResponse(Call<BusRoute> call, Response<BusRoute> response) {
@@ -39,25 +38,12 @@ public class RoutesRepo {
                 Log.e(TAG, "onFailure: failed to get route for " + routeId, t);
             }
         });
-        */
-
-        this.routesApi.getRouteById("nyw", routeId).enqueue(new Callback<List<BusRoute>>() {
-            @Override
-            public void onResponse(Call<List<BusRoute>> call, Response<List<BusRoute>> response) {
-                route.setValue(response.);
-            }
-
-            @Override
-            public void onFailure(Call<List<BusRoute>> call, Throwable t) {
-
-            }
-        });
     }
 
     public void getActiveRoutes(MutableLiveData<List<BusRoute>> routes) {
         Validate.notNull(routes);
 
-        this.busWebService.getActiveRoutes().enqueue(new Callback<List<BusRoute>>() {
+        this.routesApi.getRoutes("nyw").enqueue(new Callback<List<BusRoute>>() {
             @Override
             public void onResponse(Call<List<BusRoute>> call, Response<List<BusRoute>> response) {
                 routes.setValue(response.body());

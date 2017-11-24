@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import java.util.Collections;
 
 import me.treq.bt.android.biz.routes.RoutesViewModel;
+import me.treq.bustracker_api.data.entity.BusRoute;
 
 /**
  * A fragment representing a list of Items.
@@ -115,6 +116,6 @@ public class RouteFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(Route item);
+        void onListFragmentInteraction(BusRoute item);
     }
 }

@@ -10,14 +10,15 @@ import java.util.List;
 import java.util.Map;
 
 import me.treq.bt.android.util.InstanceFactory;
+import me.treq.bustracker_api.data.entity.BusRoute;
 
 public class RoutesViewModel extends ViewModel {
 
     private RoutesRepo routesRepo = InstanceFactory.getRoutesRepo();
 
-    private LiveData<Map<String, Route>> routeById;
+    private LiveData<Map<String, BusRoute>> routeById;
 
-    private MutableLiveData<List<Route>> routes;
+    private MutableLiveData<List<BusRoute>> routes;
 
     public void init() {
         if (this.routes != null) {
@@ -28,9 +29,9 @@ public class RoutesViewModel extends ViewModel {
         this.routes = new MutableLiveData<>();
 
         this.routeById = Transformations.map(this.routes, routes -> {
-            Map<String, Route> routeById = new HashMap<>();
-            for (Route each : routes)   {
-                routeById.put(each.getId(), each);
+            Map<String, BusRoute> routeById = new HashMap<>();
+            for (BusRoute each : routes)   {
+                routeById.put(each.getRouteId(), each);
             }
             return routeById;
         });
@@ -42,11 +43,11 @@ public class RoutesViewModel extends ViewModel {
         this.routesRepo.getActiveRoutes(this.routes);
     }
 
-    public LiveData<Map<String, Route>> getRouteByIdMap() {
+    public LiveData<Map<String, BusRoute>> getRouteByIdMap() {
         return this.routeById;
     }
 
-    public LiveData<List<Route>> getRoutes() {
+    public LiveData<List<BusRoute>> getRoutes() {
         return this.routes;
     }
 }

@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import me.treq.bt.android.biz.routes.RoutesViewModel;
+import me.treq.bustracker_api.data.entity.BusRoute;
 
 public class MainActivity extends AppCompatActivity implements RouteFragment.OnListFragmentInteractionListener {
 
@@ -29,10 +30,10 @@ public class MainActivity extends AppCompatActivity implements RouteFragment.OnL
     }
 
     @Override
-    public void onListFragmentInteraction(Route item) {
+    public void onListFragmentInteraction(BusRoute item) {
         Log.d(TAG, "onListFragmentInteraction: " + item);
         Intent intent = new Intent(this, BusMapActivity.class);
-        intent.putExtra("routeId", item.getId());
+        intent.putExtra("routeId", item.getRouteId());
         startActivity(intent);
     }
 

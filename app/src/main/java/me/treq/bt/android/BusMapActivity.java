@@ -21,9 +21,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import me.treq.bt.android.biz.Location;
 import me.treq.bt.android.biz.buses.BusesViewModel;
 import me.treq.bt.android.biz.routes.RoutesViewModel;
+import me.treq.bustracker_api.data.entity.Bus;
+import me.treq.bustracker_api.data.entity.BusRoute;
+import me.treq.bustracker_api.data.entity.Location;
 
 public class BusMapActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -96,12 +98,12 @@ public class BusMapActivity extends FragmentActivity implements OnMapReadyCallba
     }
 
 
-    private void drawRoute(Map<String, Route> routeById) {
+    private void drawRoute(Map<String, BusRoute> routeById) {
         if (this.activePolyline != null) {
             this.activePolyline.remove();
         }
 
-        Route route = routeById.get(mRouteId);
+        BusRoute route = routeById.get(mRouteId);
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
                 new LatLng(route.getRouteViewCenter().getLatitude(), route.getRouteViewCenter().getLongitude()),
@@ -122,7 +124,7 @@ public class BusMapActivity extends FragmentActivity implements OnMapReadyCallba
 
         for (Bus bus : buses) {
             MarkerOptions marker = new MarkerOptions();
-            marker.position(new LatLng(bus.getBusLocation().getLatitude(), bus.getBusLocation().getLongitude()));
+            marker.position(new LatLng(bus.getLocation().getLatitude(), bus.getLocation().getLongitude()));
             this.activeMarkers.add(this.mMap.addMarker(marker));
         }
 
