@@ -109,7 +109,7 @@ public class BusMapActivity extends FragmentActivity implements OnMapReadyCallba
 
         BusRoute route = routeById.get(mRouteId);
 
-        if (route.getPolylineArray() == null || route.getPolylineArray().isEmpty()) {
+        if (route.getBusLines() == null || route.getBusLines().isEmpty()) {
             return;
         }
 
@@ -142,7 +142,10 @@ public class BusMapActivity extends FragmentActivity implements OnMapReadyCallba
      * @return list of two {@link LatLng} - first is south west; second is northeast
      */
     private List<LatLng> getBounds(BusRoute route) {
-        List<Location> locations = route.getPolylineArray();
+        List<Location> locations = new ArrayList<>();
+        for (BusLine locs : route.getBusLines()) {
+            locations.addAll(locs.getPolyline());
+        }
 
         Location first = locations.get(0);
         double minLat = first.getLatitude();
