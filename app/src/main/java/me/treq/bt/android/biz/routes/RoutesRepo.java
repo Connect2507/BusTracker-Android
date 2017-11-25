@@ -27,7 +27,7 @@ public class RoutesRepo {
         Validate.notEmpty(routeId, "A valid routeId is required.");
         Validate.notNull(route, "A valid route is required.");
 
-        this.routesApi.getRouteById("nyw", routeId).enqueue(new Callback<BusRoute>() {
+        this.routesApi.getRouteById("njt", routeId).enqueue(new Callback<BusRoute>() {
             @Override
             public void onResponse(Call<BusRoute> call, Response<BusRoute> response) {
                 route.setValue(response.body());
@@ -43,7 +43,7 @@ public class RoutesRepo {
     public void getActiveRoutes(MutableLiveData<List<BusRoute>> routes) {
         Validate.notNull(routes);
 
-        this.routesApi.getRoutes("nyw").enqueue(new Callback<List<BusRoute>>() {
+        this.routesApi.getRoutes("njt").enqueue(new Callback<List<BusRoute>>() {
             @Override
             public void onResponse(Call<List<BusRoute>> call, Response<List<BusRoute>> response) {
                 routes.setValue(response.body());

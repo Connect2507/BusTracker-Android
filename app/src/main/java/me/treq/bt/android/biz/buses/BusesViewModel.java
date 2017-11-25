@@ -31,7 +31,7 @@ public class BusesViewModel extends ViewModel {
 
     public void refresh(String routeId) {
         Log.d("BusesViewModel", "refresh: buses for route " + routeId + " at " + new Date());
-        this.busRepo.getBuses(this.buses, "nyWaterway", routeId);
+        this.busRepo.getBuses(this.buses, "njt", routeId);
     }
 
     public LiveData<List<Bus>> getBuses() {

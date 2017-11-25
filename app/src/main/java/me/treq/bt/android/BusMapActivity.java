@@ -12,10 +12,12 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.common.collect.ImmutableList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,9 +107,22 @@ public class BusMapActivity extends FragmentActivity implements OnMapReadyCallba
 
         BusRoute route = routeById.get(mRouteId);
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                new LatLng(route.getRouteViewCenter().getLatitude(), route.getRouteViewCenter().getLongitude()),
-                14.5f));
+        if (route.getPolylineArray() == null || route.getPolylineArray().isEmpty()) {
+            return;
+        }
+
+        if (route.getRouteViewCenter() != null) {
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                    new LatLng(route.getRouteViewCenter().getLatitude(), route.getRouteViewCenter().getLongitude()),
+                    14.5f));
+        } else {
+            List<LatLng> bounds = getBounds(route);
+
+            LatLngBounds latLngBounds = new LatLngBounds(bounds.get(0), bounds.get(1));
+            int paddingInPx = 10;
+
+            mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, paddingInPx));
+        }
 
         PolylineOptions polylineOptions = new PolylineOptions();
         for (Location loc : route.getPolylineArray()) {
@@ -115,6 +130,31 @@ public class BusMapActivity extends FragmentActivity implements OnMapReadyCallba
         }
 
         this.activePolyline = this.mMap.addPolyline(polylineOptions);
+    }
+
+    /**
+     * Calculate the rect bounds which are represents by southwest(min lat and long) point and
+     * northeast (max lat and long).
+     * @param route
+     * @return list of two {@link LatLng} - first is south west; second is northeast
+     */
+    private List<LatLng> getBounds(BusRoute route) {
+        List<Location> locations = route.getPolylineArray();
+
+        Location first = locations.get(0);
+        double minLat = first.getLatitude();
+        double minLong = first.getLongitude();
+        double maxLat = first.getLatitude();
+        double maxLong = first.getLongitude();
+
+        for (Location each : locations) {
+            minLat = Math.min(minLat, each.getLatitude());
+            minLong = Math.min(minLong, each.getLongitude());
+            maxLat = Math.max(maxLat, each.getLatitude());
+            maxLong = Math.max(maxLong, each.getLongitude());
+        }
+
+        return ImmutableList.of(new LatLng(minLat, minLong), new LatLng(maxLat, maxLong));
     }
 
     private void drawBuses(List<Bus> buses) {

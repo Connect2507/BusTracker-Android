@@ -24,7 +24,7 @@ public class BusRepo {
     }
 
     public void getBuses(MutableLiveData<List<Bus>> buses, String system, String routeId) {
-        this.busesApi.getBus("nyw", routeId).enqueue(new Callback<List<Bus>>() {
+        this.busesApi.getBus(system, routeId).enqueue(new Callback<List<Bus>>() {
             @Override
             public void onResponse(Call<List<Bus>> call, Response<List<Bus>> response) {
                 Log.i("BusRepo", "onResponse: got buses from bus service");
