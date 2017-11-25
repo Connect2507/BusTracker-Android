@@ -26,6 +26,7 @@ import java.util.Map;
 import me.treq.bt.android.biz.buses.BusesViewModel;
 import me.treq.bt.android.biz.routes.RoutesViewModel;
 import me.treq.bustracker_api.data.entity.Bus;
+import me.treq.bustracker_api.data.entity.BusLine;
 import me.treq.bustracker_api.data.entity.BusRoute;
 import me.treq.bustracker_api.data.entity.Location;
 
@@ -43,7 +44,7 @@ public class BusMapActivity extends FragmentActivity implements OnMapReadyCallba
 
     private List<Marker> activeMarkers = new ArrayList<>();
 
-    private Polyline activePolyline = null;
+    private List<Polyline> activePolylines = new ArrayList<>();
 
 
     @Override
@@ -101,9 +102,10 @@ public class BusMapActivity extends FragmentActivity implements OnMapReadyCallba
 
 
     private void drawRoute(Map<String, BusRoute> routeById) {
-        if (this.activePolyline != null) {
-            this.activePolyline.remove();
+        for (Polyline polyline : this.activePolylines) {
+            polyline.remove();
         }
+        this.activePolylines.clear();
 
         BusRoute route = routeById.get(mRouteId);
 
@@ -124,12 +126,13 @@ public class BusMapActivity extends FragmentActivity implements OnMapReadyCallba
             mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, paddingInPx));
         }
 
-        PolylineOptions polylineOptions = new PolylineOptions();
-        for (Location loc : route.getPolylineArray()) {
-            polylineOptions.add(new LatLng(loc.getLatitude(), loc.getLongitude()));
+        for (BusLine busLine : route.getBusLines()) {
+            PolylineOptions polylineOptions = new PolylineOptions();
+            for (Location loc : busLine.getPolyline()) {
+                polylineOptions.add(new LatLng(loc.getLatitude(), loc.getLongitude()));
+            }
+            this.activePolylines.add(this.mMap.addPolyline(polylineOptions));
         }
-
-        this.activePolyline = this.mMap.addPolyline(polylineOptions);
     }
 
     /**
